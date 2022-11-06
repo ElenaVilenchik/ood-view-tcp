@@ -9,7 +9,7 @@ import telran.view.Menu;
 import telran.view.NumbersOperationsMenu;
 import telran.view.consoleInputOutput;
 
-public class SubMenuTest {
+public class MenuTest {
 
 	public static void main(String[] args) {
 		Menu menu = new Menu("Home work", getSubMenu());
