@@ -1,45 +1,38 @@
 package telran.view;
 
-public class DateOperationsMenu {
-	public static Menu getDateOperationsMenu() {
-		Menu menu = new Menu("Arithmetic operations", getItems());
-		menu.perform(new consoleInputOutput());
-		return menu;
-	}
+import java.time.LocalDate;
+import java.time.Period;
 
-	private static Item[] getItems() {
-		Item[] res = { Item.of("Add numbers", DateOperationsMenu::add),
-				Item.of("Subtract numbers", DateOperationsMenu::subtract),
-				Item.of("Multiply numbers", DateOperationsMenu::multiply),
-				Item.of("Didide numbers", DateOperationsMenu::divide), 
+public class DateOperationsMenu {
+	static LocalDate today = LocalDate.now();
+	static String format = "d/M/y";
+
+	public static Item[] getDateOperationsMenu() {
+		Item[] res = { Item.of("Date after given number days", DateOperationsMenu::dateAfter),
+				Item.of("Date before given number days", DateOperationsMenu::dateBefore),
+				Item.of("Number days between two dates", DateOperationsMenu::daysBetween),
+				Item.of("Age according to the birthdate", DateOperationsMenu::age), 
 				Item.exit() };
 		return res;
 	}
 
-	static void add(InputOutput io) {
-		int numbers[] = enterNumbers(io);
-		io.writeLine(numbers[0] + numbers[1]);
+	static void dateAfter(InputOutput io) {
+		io.writeLine(today.plusDays(io.readInt("enter amount of days", "no date")));
 	}
 
-	static void subtract(InputOutput io) {
-		int numbers[] = enterNumbers(io);
-		io.writeLine(numbers[0] - numbers[1]);
+	static void dateBefore(InputOutput io) {
+		io.writeLine(today.minusDays(io.readInt("enter amount of days", "no date")));
 	}
 
-	static void multiply(InputOutput io) {
-		int numbers[] = enterNumbers(io);
-		io.writeLine(numbers[0] * numbers[1]);
+	static void daysBetween(InputOutput io) {
+		LocalDate startDate = io.readDate("Enter start date " + format, "no date in format " + format, format);
+		LocalDate endDate = io.readDate("Enter end date " + format, "no date in format " + format, format);
+		io.writeLine(Math.abs(endDate.toEpochDay() - startDate.toEpochDay()));
 	}
 
-	static void divide(InputOutput io) {
-		int numbers[] = enterNumbers(io);
-		io.writeLine(numbers[0] / numbers[1]);
-	}
-
-	private static int[] enterNumbers(InputOutput io) {
-		int res[] = new int[2];
-		res[0] = io.readInt("enter first number", "no number");
-		res[1] = io.readInt("enter second number", "no number");
-		return res;
+	static void age(InputOutput io) {
+		LocalDate birthDate = io.readDate("Enter birthdate " + format, "no date in format " + format, format);
+		Period period = Period.between(birthDate, today);
+		io.writeLine(period.getYears() + " years " + period.getMonths() + " month " + period.getDays() + " days");
 	}
 }
