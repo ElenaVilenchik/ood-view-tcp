@@ -13,16 +13,16 @@ public class DateTest {
 	static String format = "d/M/y";
 
 	public static void main(String[] args) {
-		Menu menu = new Menu("Date", getItems());
+		Menu menu = new Menu("Operations with dates", getItems());
 		menu.perform(new consoleInputOutput());
-
 	}
 
 	private static Item[] getItems() {
 		Item[] res = { Item.of("Date after given number days", DateTest::dateAfter),
 				Item.of("Date before given number days", DateTest::dateBefore),
 				Item.of("Number days between two dates", DateTest::daysBetween),
-				Item.of("Age according to the birthdate", DateTest::age), Item.exit() };
+				Item.of("Age according to the birthdate", DateTest::age), 
+				Item.exit() };
 		return res;
 	}
 
@@ -37,7 +37,7 @@ public class DateTest {
 	static void daysBetween(InputOutput io) {
 		LocalDate startDate = io.readDate("Enter start date " + format, "no date in format " + format, format);
 		LocalDate endDate = io.readDate("Enter end date " + format, "no date in format " + format, format);
-		io.writeLine(endDate.toEpochDay() - startDate.toEpochDay());
+		io.writeLine(Math.abs(endDate.toEpochDay() - startDate.toEpochDay()));
 	}
 
 	static void age(InputOutput io) {

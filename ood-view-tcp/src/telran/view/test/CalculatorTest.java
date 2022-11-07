@@ -18,7 +18,7 @@ public class CalculatorTest {
 		Item[] res = { Item.of("Add numbers", CalculatorTest::add),
 				Item.of("Subtract numbers", CalculatorTest::subtract),
 				Item.of("Multiply numbers", CalculatorTest::multiply),
-				Item.of("Didide numbers", CalculatorTest::divide), 
+				Item.of("Division numbers", CalculatorTest::divide), 
 				Item.exit() };
 		return res;
 	}
